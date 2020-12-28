@@ -1,8 +1,10 @@
 <?php
 declare(strict_types=1);
 
+use App\Domain\Task\TaskRepository;
 use App\Domain\User\UserRepository;
 use App\Infrastructure\Persistence\Postgresql\Connection;
+use App\Infrastructure\Persistence\Task\PostgresqlTaskRepository;
 use App\Infrastructure\Persistence\User\PostgresqlUserRepository;
 use DI\ContainerBuilder;
 use Psr\Container\ContainerInterface;
@@ -13,6 +15,11 @@ return function (ContainerBuilder $containerBuilder) {
             $connection = $c->get(Connection::class);
 
             return new PostgresqlUserRepository($connection);
+        },
+        TaskRepository::class => function (ContainerInterface $c) {
+            $connection = $c->get(Connection::class);
+
+            return new PostgresqlTaskRepository($connection);
         }
     ]);
 };

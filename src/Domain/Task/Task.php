@@ -38,6 +38,23 @@ class Task implements \JsonSerializable
         $this->done = $done;
     }
 
+    /**
+     * @param array $data
+     * @return Task
+     */
+    public static function fromArray(array $data): Task
+    {
+        return new self(
+            $data['id'],
+            $data['user_id'],
+            $data['name'],
+            new DateTimeImmutable($data['date']),
+            $data['done']);
+    }
+
+    /**
+     * Mark task as done
+     */
     public function markTaskAsDone(): void
     {
         $this->done = true;

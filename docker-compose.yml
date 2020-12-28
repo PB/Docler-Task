@@ -12,7 +12,7 @@ services:
                 condition: service_healthy
         build: .
         working_dir: /var/www
-        command: php -S 0.0.0.0:8080 -t public
+        command: composer start
         environment:
             docker: "true"
             DB_HOST: db
@@ -47,9 +47,11 @@ services:
         depends_on:
             db-test:
                 condition: service_healthy
-        build: .
+        build:
+            context: .
+            target: testing
         working_dir: /var/www
-        command: ./vendor/bin/phpunit
+        command: composer test
         environment:
             docker: "true"
             DB_HOST: db-test
@@ -57,6 +59,7 @@ services:
             DB_DATABASE: tasks
             DB_USERNAME: task_user
             DB_PASSWORD: task_password
+            XDEBUG_MODE: coverage
         volumes:
             - .:/var/www
             - logs:/var/www/logs

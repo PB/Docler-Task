@@ -58,4 +58,20 @@ class TaskTest extends TestCase
 
         self::assertEquals($expectedPayload, json_encode($task));
     }
+
+    /**
+     * @dataProvider taskProvider
+     * @param $id
+     * @param $userId
+     * @param $name
+     * @param $date
+     * @param $done
+     */
+    public function testMarkAsDone($id, $userId, $name, $date, $done)
+    {
+        $task = new Task($id, $userId, $name, $date, $done);
+        $task->markTaskAsDone();
+
+        self::assertTrue($task->isDone());
+    }
 }

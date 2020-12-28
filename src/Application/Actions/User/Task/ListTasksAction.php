@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace App\Application\Actions\User\Task;
 
-use App\Domain\Task\Task;
-use App\Domain\Task\ValueObject\TaskList;
 use DateTimeImmutable;
 use Psr\Http\Message\ResponseInterface as Response;
 use Ramsey\Uuid\Uuid;
@@ -21,17 +19,20 @@ class ListTasksAction extends TaskAction
         if (!Uuid::isValid($userId)) {
             throw new HttpBadRequestException($this->request);
         }
+        // will throw error if user not found
         $user = $this->userRepository->findUserOfId($userId);
 
-        $tasks = [
-            new Task(Uuid::uuid4()->toString(), Uuid::uuid4()->toString(), 'task 1', new DateTimeImmutable(), true),
-            new Task(Uuid::uuid4()->toString(), Uuid::uuid4()->toString(), 'task 2', new DateTimeImmutable(), false),
-            new Task(Uuid::uuid4()->toString(), Uuid::uuid4()->toString(), 'task 3', new DateTimeImmutable(), true),
+        $date = new DateTimeImmutable(\date('Y-m-d'));
+        $taskList = $this->taskRepository->findTaskOfUserIdAndDate($userId, $date);
+
+        $this->logger->info("Task list of user $userId was viewed.");
+
+        $data = [
+            'user' => $user,
+            'date' => $date->format('Y-m-d'),
+            'tasks' => $taskList->getTasks()
         ];
-        $tasksList = new TaskList($tasks);
 
-        $this->logger->info("Task list was viewed.");
-
-        return $this->respondWithData($tasks);
+        return $this->respondWithData($data);
     }
 }

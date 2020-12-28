@@ -3,16 +3,17 @@ declare(strict_types=1);
 
 namespace App\Domain\Task;
 
-use Monolog\DateTimeImmutable;
+use App\Domain\Task\ValueObject\TasksList;
+use DateTimeImmutable;
 
 interface TaskRepository
 {
     /**
      * @param string $userId
      * @param DateTimeImmutable $date
-     * @return Task[]
+     * @return TasksList
      */
-    public function findTaskOfUserIdAndDate(string $userId, DateTimeImmutable $date): array;
+    public function findTaskOfUserIdAndDate(string $userId, DateTimeImmutable $date): TasksList;
 
     /**
      * @param string $id

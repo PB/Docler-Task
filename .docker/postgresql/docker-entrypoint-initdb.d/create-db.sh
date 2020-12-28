@@ -39,5 +39,17 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "tasks" <<-EOSQL
     GRANT ALL PRIVILEGES ON TABLE users TO task_user;
     GRANT ALL PRIVILEGES ON TABLE tasks TO task_user;
 
+    -- generate example data
     INSERT INTO users VALUES ('8cdf1af4-a1ce-43f1-a082-a183d71fd685', 'user.one');
+
+    INSERT INTO tasks VALUES ('fb538c52-648a-42ae-bfb6-ef03a19828d1' ,'8cdf1af4-a1ce-43f1-a082-a183d71fd685', 'Task One', NOW());
+    INSERT INTO tasks VALUES (gen_random_uuid() ,'8cdf1af4-a1ce-43f1-a082-a183d71fd685', 'Task Two', NOW());
+    INSERT INTO tasks VALUES (gen_random_uuid() ,'8cdf1af4-a1ce-43f1-a082-a183d71fd685', 'Task Three', NOW());
+    INSERT INTO tasks VALUES (gen_random_uuid() ,'8cdf1af4-a1ce-43f1-a082-a183d71fd685', 'Task Four', NOW());
+    INSERT INTO tasks VALUES (gen_random_uuid() ,'8cdf1af4-a1ce-43f1-a082-a183d71fd685', 'Task Five', NOW());
+    INSERT INTO tasks VALUES (gen_random_uuid() ,'8cdf1af4-a1ce-43f1-a082-a183d71fd685', 'Task Six', NOW());
+    INSERT INTO tasks VALUES (gen_random_uuid() ,'8cdf1af4-a1ce-43f1-a082-a183d71fd685', 'Task Seven', NOW());
+    INSERT INTO tasks VALUES (gen_random_uuid() ,'8cdf1af4-a1ce-43f1-a082-a183d71fd685', 'Task Eight', NOW());
+    INSERT INTO tasks VALUES (gen_random_uuid() ,'8cdf1af4-a1ce-43f1-a082-a183d71fd685', 'Task Nine', NOW(), true);
+    INSERT INTO tasks VALUES (gen_random_uuid() ,'8cdf1af4-a1ce-43f1-a082-a183d71fd685', 'Task Ten', NOW(), true);
 EOSQL

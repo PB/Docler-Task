@@ -1,4 +1,4 @@
-FROM php:8-alpine
+FROM php:8-alpine as base
 
 COPY . /var/www
 
@@ -19,3 +19,15 @@ RUN set -ex \
     postgresql-dev
 
 RUN docker-php-ext-install pdo pdo_pgsql
+
+###########
+# Testing #
+###########
+FROM base as testing
+
+USER root
+
+RUN apk --no-cache add pcre-dev ${PHPIZE_DEPS} \
+  && pecl install xdebug \
+  && docker-php-ext-enable xdebug \
+  && apk del pcre-dev ${PHPIZE_DEPS}

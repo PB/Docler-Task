@@ -9,7 +9,7 @@ use App\Domain\Task\Task;
  * Class Task
  * @package App\Domain\Task
  */
-class TaskList
+class TasksList
 {
     /**
      * @var Task[]
@@ -17,12 +17,22 @@ class TaskList
     private array $tasks;
 
     /**
-     * TaskList constructor.
+     * TasksList constructor.
      * @param Task[] $tasks
      */
-    public function __construct(array $tasks)
+    public function __construct(array $tasks = [])
     {
         $this->tasks = $tasks;
+    }
+
+    public function addTask(Task $task): void
+    {
+        $this->tasks[] = $task;
+    }
+
+    public function hasTasks(): bool
+    {
+        return !empty($this->tasks);
     }
 
     /**
