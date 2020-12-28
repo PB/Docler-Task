@@ -1,0 +1,76 @@
+version: '3.7'
+
+volumes:
+    postgres-volume:
+    logs:
+        driver: local
+
+services:
+    api:
+        depends_on:
+            db:
+                condition: service_healthy
+        build: .
+        working_dir: /var/www
+        command: php -S 0.0.0.0:8080 -t public
+        environment:
+            docker: "true"
+            DB_HOST: db
+            DB_PORT: 5432
+            DB_DATABASE: tasks
+            DB_USERNAME: task_user
+            DB_PASSWORD: task_password
+        ports:
+            - 8080:8080
+        volumes:
+            - .:/var/www
+            - logs:/var/www/logs
+
+    db:
+        image: postgres:13.1-alpine
+        environment:
+            POSTGRES_PASSWORD: pgpassword
+        volumes:
+            - ./.docker/postgresql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+            - postgres-volume:/var/lib/postgres/data
+        ports:
+            - 5430:5432
+        healthcheck:
+            timeout: 5s
+            interval: 5s
+            retries: 5
+            test:
+                - "CMD-SHELL"
+                - "pg_isready --dbname=tasks --host=localhost --username=task_user"
+
+    test:
+        depends_on:
+            db-test:
+                condition: service_healthy
+        build: .
+        working_dir: /var/www
+        command: ./vendor/bin/phpunit
+        environment:
+            docker: "true"
+            DB_HOST: db-test
+            DB_PORT: 5432
+            DB_DATABASE: tasks
+            DB_USERNAME: task_user
+            DB_PASSWORD: task_password
+        volumes:
+            - .:/var/www
+            - logs:/var/www/logs
+
+    db-test:
+        image: postgres:13.1-alpine
+        environment:
+            POSTGRES_PASSWORD: pgpassword
+        volumes:
+            - ./.docker/postgresql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+        healthcheck:
+            timeout: 5s
+            interval: 5s
+            retries: 5
+            test:
+                - "CMD-SHELL"
+                - "pg_isready --dbname=tasks --host=localhost --username=task_user"
