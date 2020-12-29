@@ -10,7 +10,9 @@ services:
         depends_on:
             db:
                 condition: service_healthy
-        build: .
+        build:
+            context: .
+            target: base
         working_dir: /var/www
         command: php -S 0.0.0.0:8080 -t public
         environment:
@@ -22,9 +24,9 @@ services:
             DB_PASSWORD: task_password
         ports:
             - 8080:8080
-        volumes:
-            - .:/var/www
-            - logs:/var/www/logs
+#        volumes:
+#            - .:/var/www
+#            - logs:/var/www/logs
 
     db:
         image: postgres:13.1-alpine
@@ -60,9 +62,9 @@ services:
             DB_USERNAME: task_user
             DB_PASSWORD: task_password
             XDEBUG_MODE: coverage
-        volumes:
-            - .:/var/www
-            - logs:/var/www/logs
+#        volumes:
+#            - .:/var/www
+#            - logs:/var/www/logs
 
     db-test:
         image: postgres:13.1-alpine
