@@ -22,7 +22,8 @@ class TasksListViewedListener implements Listener
      * TasksListViewedListener constructor.
      * @param LoggerInterface $logger
      */
-    public function __construct(LoggerInterface $logger){
+    public function __construct(LoggerInterface $logger)
+    {
 
         $this->logger = $logger;
     }

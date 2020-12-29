@@ -49,7 +49,8 @@ class Task implements \JsonSerializable
             $data['user_id'],
             $data['name'],
             new DateTimeImmutable($data['date']),
-            $data['done']);
+            $data['done']
+        );
     }
 
     /**
