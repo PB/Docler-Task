@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Domain\Task\ValueObject;
@@ -14,9 +15,27 @@ class TasksListTest extends TestCase
     public function prepareTasks()
     {
         return [
-            new Task(Uuid::uuid4()->toString(), Uuid::uuid4()->toString(), 'task 1', new DateTimeImmutable('2020-10-10'), true),
-            new Task(Uuid::uuid4()->toString(), Uuid::uuid4()->toString(), 'task 2', new DateTimeImmutable('2020-01-10'), false),
-            new Task(Uuid::uuid4()->toString(), Uuid::uuid4()->toString(), 'task 3', new DateTimeImmutable(), true),
+            new Task(
+                Uuid::uuid4()->toString(),
+                Uuid::uuid4()->toString(),
+                'task 1',
+                new DateTimeImmutable('2020-10-10'),
+                true
+            ),
+            new Task(
+                Uuid::uuid4()->toString(),
+                Uuid::uuid4()->toString(),
+                'task 2',
+                new DateTimeImmutable('2020-01-10'),
+                false
+            ),
+            new Task(
+                Uuid::uuid4()->toString(),
+                Uuid::uuid4()->toString(),
+                'task 3',
+                new DateTimeImmutable(),
+                true
+            ),
         ];
     }
 
@@ -46,9 +65,15 @@ class TasksListTest extends TestCase
 
         self::assertCount(\count($tasks), $taskList->getTasks());
 
-        $task  = new Task(Uuid::uuid4()->toString(), Uuid::uuid4()->toString(), 'task 4', new DateTimeImmutable(), true);
+        $task = new Task(
+            Uuid::uuid4()->toString(),
+            Uuid::uuid4()->toString(),
+            'task 4',
+            new DateTimeImmutable(),
+            true
+        );
 
         $taskList->addTask($task);
-        self::assertCount(\count($tasks)+1, $taskList->getTasks());
+        self::assertCount(\count($tasks) + 1, $taskList->getTasks());
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Infrastructure\Persistence\User;
@@ -34,14 +35,20 @@ class PostgresqlTaskRepositoryTest extends TestCase
     public function testFindTaskOfUserIdAndDateNotFound()
     {
         $taskRepository = $this->getAppInstance()->getContainer()->get(TaskRepository::class);
-        $tasksList =  $taskRepository->findTaskOfUserIdAndDate('8cdf1af4-a1ce-43f1-a082-a183d71fd685', new \DateTimeImmutable('2018-10-10'));
+        $tasksList =  $taskRepository->findTaskOfUserIdAndDate(
+            '8cdf1af4-a1ce-43f1-a082-a183d71fd685',
+            new \DateTimeImmutable('2018-10-10')
+        );
         self::assertFalse($tasksList->hasTasks());
     }
 
     public function testFindTaskOfUserIdAndDate()
     {
         $taskRepository = $this->getAppInstance()->getContainer()->get(TaskRepository::class);
-        $tasksList =  $taskRepository->findTaskOfUserIdAndDate('8cdf1af4-a1ce-43f1-a082-a183d71fd685', new \DateTimeImmutable());
+        $tasksList =  $taskRepository->findTaskOfUserIdAndDate(
+            '8cdf1af4-a1ce-43f1-a082-a183d71fd685',
+            new \DateTimeImmutable()
+        );
         self::assertInstanceOf(TasksList::class, $tasksList);
         self::assertTrue($tasksList->hasTasks());
         self::assertCount(10, $tasksList->getTasks());

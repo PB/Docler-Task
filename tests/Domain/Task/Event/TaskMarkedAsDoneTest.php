@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Domain\Task\Event;
@@ -8,7 +9,6 @@ use App\Domain\Task\Task;
 use DateTimeImmutable;
 use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
-
 
 class TaskMarkedAsDoneTest extends TestCase
 {

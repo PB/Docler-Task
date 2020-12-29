@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Application\Handlers;
@@ -50,7 +51,8 @@ class HttpErrorHandler extends SlimErrorHandler
             }
         }
 
-        if (!($exception instanceof HttpException)
+        if (
+            !($exception instanceof HttpException)
             && ($exception instanceof Exception || $exception instanceof Throwable)
             && $this->displayErrorDetails
         ) {
@@ -58,7 +60,7 @@ class HttpErrorHandler extends SlimErrorHandler
         }
 
         $payload = new ActionPayload($statusCode, null, $error);
-        $encodedPayload = json_encode($payload, JSON_PRETTY_PRINT);
+        $encodedPayload = json_encode($payload, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT);
 
         $response = $this->responseFactory->createResponse($statusCode);
         $response->getBody()->write($encodedPayload);

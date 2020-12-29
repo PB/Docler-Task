@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Infrastructure\Persistence\Task;
@@ -54,8 +55,10 @@ class PostgresqlTaskRepository implements TaskRepository
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         $tasks = new TasksList();
-        foreach ($result as $task) {
-            $tasks->addTask(Task::fromArray($task));
+        if (is_array($result)) {
+            foreach ($result as $task) {
+                $tasks->addTask(Task::fromArray($task));
+            }
         }
 
         return $tasks;

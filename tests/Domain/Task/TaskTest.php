@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Domain\Task;
@@ -13,9 +14,27 @@ class TaskTest extends TestCase
     public function taskProvider()
     {
         return [
-            [Uuid::uuid4()->toString(), Uuid::uuid4()->toString(), 'task 1', new DateTimeImmutable('2020-10-10'), true],
-            [Uuid::uuid4()->toString(), Uuid::uuid4()->toString(), 'task 2', new DateTimeImmutable('2020-01-10'), false],
-            [Uuid::uuid4()->toString(), Uuid::uuid4()->toString(), 'task 3', new DateTimeImmutable(), true],
+            [
+                Uuid::uuid4()->toString(),
+                Uuid::uuid4()->toString(),
+                'task 1',
+                new DateTimeImmutable('2020-10-10'),
+                true
+            ],
+            [
+                Uuid::uuid4()->toString(),
+                Uuid::uuid4()->toString(),
+                'task 2',
+                new DateTimeImmutable('2020-01-10'),
+                false
+            ],
+            [
+                Uuid::uuid4()->toString(),
+                Uuid::uuid4()->toString(),
+                'task 3',
+                new DateTimeImmutable(),
+                true
+            ],
         ];
     }
 

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Application\Actions;
@@ -69,21 +70,6 @@ abstract class Action
     abstract protected function action(): Response;
 
     /**
-     * @return array|object
-     * @throws HttpBadRequestException
-     */
-    protected function getFormData()
-    {
-        $input = json_decode(file_get_contents('php://input'));
-
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new HttpBadRequestException($this->request, 'Malformed JSON input.');
-        }
-
-        return $input;
-    }
-
-    /**
      * @param  string $name
      * @return mixed
      * @throws HttpBadRequestException
@@ -98,7 +84,7 @@ abstract class Action
     }
 
     /**
-     * @param null $data
+     * @param mixed|null $data
      * @param int $statusCode
      * @return Response
      */
@@ -115,7 +101,7 @@ abstract class Action
      */
     protected function respond(ActionPayload $payload): Response
     {
-        $json = json_encode($payload, JSON_PRETTY_PRINT);
+        $json = json_encode($payload, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT);
         $this->response->getBody()->write($json);
 
         return $this->response

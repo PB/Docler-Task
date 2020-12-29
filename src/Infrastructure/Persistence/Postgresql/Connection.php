@@ -42,6 +42,9 @@ class Connection
      */
     public function execute(string $sql, array $params): PDOStatement
     {
+        if (self::$connection === null) {
+            throw new \RuntimeException('Database connection not ready');
+        }
         $stmt = self::$connection->prepare($sql);
         $stmt->execute($params);
 

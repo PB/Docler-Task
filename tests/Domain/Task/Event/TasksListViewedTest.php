@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Domain\Task\Event;
@@ -20,9 +21,28 @@ class TasksListViewedTest extends TestCase
     public function prepareTasks()
     {
         return [
-            new Task(Uuid::uuid4()->toString(), Uuid::uuid4()->toString(), 'task 1', new DateTimeImmutable('2020-10-10'), true),
-            new Task(Uuid::uuid4()->toString(), Uuid::uuid4()->toString(), 'task 2', new DateTimeImmutable('2020-01-10'), false),
-            new Task(Uuid::uuid4()->toString(), Uuid::uuid4()->toString(), 'task 3', new DateTimeImmutable(), true),
+            new Task(
+                Uuid::uuid4()->toString(),
+                Uuid::uuid4()->toString(),
+                'task 1',
+                new DateTimeImmutable('2020-10-10'),
+                true
+            )
+            ,
+            new Task(
+                Uuid::uuid4()->toString(),
+                Uuid::uuid4()->toString(),
+                'task 2',
+                new DateTimeImmutable('2020-01-10'),
+                false
+            ),
+            new Task(
+                Uuid::uuid4()->toString(),
+                Uuid::uuid4()->toString(),
+                'task 3',
+                new DateTimeImmutable(),
+                true
+            ),
         ];
     }
 

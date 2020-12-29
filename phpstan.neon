@@ -1,0 +1,8 @@
+parameters:
+  level: max
+  inferPrivatePropertyTypeFromConstructor: true
+  checkMissingIterableValueType: false
+  ignoreErrors:
+    - '#Property (.*) has no typehint specified#'
+  excludes_analyse:
+    - '%currentWorkingDirectory%/src/Application/Handlers/*'
