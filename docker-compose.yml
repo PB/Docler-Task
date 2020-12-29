@@ -12,7 +12,7 @@ services:
                 condition: service_healthy
         build: .
         working_dir: /var/www
-        command: composer start
+        command: php -S 0.0.0.0:8080 -t public
         environment:
             docker: "true"
             DB_HOST: db

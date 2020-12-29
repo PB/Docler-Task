@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Application\Actions\User\Task;
 
+use App\Domain\Task\Event\TasksListViewed;
 use DateTimeImmutable;
 use Psr\Http\Message\ResponseInterface as Response;
 use Ramsey\Uuid\Uuid;
@@ -23,14 +24,15 @@ class ListTasksAction extends TaskAction
         $user = $this->userRepository->findUserOfId($userId);
 
         $date = new DateTimeImmutable(\date('Y-m-d'));
-        $taskList = $this->taskRepository->findTaskOfUserIdAndDate($userId, $date);
+        $tasksList = $this->taskRepository->findTaskOfUserIdAndDate($userId, $date);
 
-        $this->logger->info("Task list of user $userId was viewed.");
+        $event = new TasksListViewed($tasksList, $user);
+        $this->eventDispatcher->dispatch($event);
 
         $data = [
             'user' => $user,
             'date' => $date->format('Y-m-d'),
-            'tasks' => $taskList->getTasks()
+            'tasks' => $tasksList->getTasks()
         ];
 
         return $this->respondWithData($data);

@@ -39,6 +39,10 @@ class TestCase extends PHPUnit_TestCase
         $repositories = require __DIR__ . '/../app/repositories.php';
         $repositories($containerBuilder);
 
+        // Set up events
+        $events = require __DIR__ . '/../app/events.php';
+        $events($containerBuilder);
+
         // Build PHP-DI Container instance
         $container = $containerBuilder->build();
 
